@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack Pro - Your Fitness Journey Starts Here</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            background: white;
+            border-radius: 20px;
+            margin: 80px 20px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .page {
+            display: none;
+            padding: 2rem;
+            min-height: 500px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page Styles */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            margin: -2rem -2rem 2rem;
+            
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Form Styles */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Workout Styles */
+        .workout-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .workout-card {
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .workout-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .workout-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .workout-content {
+            padding: 1.5rem;
+        }
+
+        /* BMI Result Styles */
+        .bmi-result {
+            margin-top: 2rem;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .bmi-result.show {
+            display: block;
+        }
+
+        .bmi-normal { background: #d4edda; color: #155724; }
+        .bmi-underweight { background: #cce7ff; color: #004085; }
+        .bmi-overweight { background: #fff3cd; color: #856404; }
+        .bmi-obese { background: #f8d7da; color: #721c24; }
+
+        .bmi-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        /* Weekly Tracking Styles */
+        .tracking-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .week-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .chart-container {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Login Styles */
+        .auth-container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .auth-toggle {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 50px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .auth-toggle button {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-toggle button.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .week-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">F</div>
+                FitTrack Pro
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                <li><a href="#" onclick="showPage('workouts')">Workouts</a></li>
+                <li><a href="#" onclick="showPage('bmi')">BMI Check</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                <li><a href="#" onclick="showPage('login')">Login</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <h1>Welcome to FitTrack Pro</h1>
+                <p>Your ultimate fitness companion for tracking workouts, monitoring progress, and achieving your health goals</p>
+                <button class="cta-button" onclick="showPage('bmi')">Start Your Journey</button>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🏋️</div>
+                    <h3>Workout Tracking</h3>
+                    <p>Track your exercises with detailed descriptions and visual guides</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>BMI Calculator</h3>
+                    <p>Monitor your body mass index and get personalized recommendations</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📈</div>
+                    <h3>Progress Analytics</h3>
+                    <p>Visualize your fitness journey with weekly tracking and insights</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Us Page -->
+        <div id="about" class="page">
+            <div class="container">
+                <h2>About FitTrack Pro</h2>
+                <p style="font-size: 1.1rem; margin: 2rem 0;">FitTrack Pro is your comprehensive fitness tracking solution designed to help you achieve your health and wellness goals. Our platform combines cutting-edge technology with user-friendly design to provide you with the tools you need for a successful fitness journey.</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Goal-Oriented Approach</h3>
+                        <p>Set personalized fitness goals and track your progress with detailed analytics and insights.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🥗</div>
+                        <h3>Nutrition Guidance</h3>
+                        <p>Get personalized diet suggestions based on your BMI and fitness goals.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">👥</div>
+                        <h3>Community Support</h3>
+                        <p>Join a supportive community of fitness enthusiasts on similar journeys.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workouts Page -->
+        <div id="workouts" class="page">
+            <div class="container">
+                <h2>Workout Library</h2>
+                <p>Discover a variety of exercises to keep your fitness routine exciting and effective.</p>
+                
+                <div class="workout-grid">
+                    <div class="workout-card">
+                        <div class="workout-image">🏃‍♂️</div>
+                        <div class="workout-content">
+                            <h3>Cardio Workouts</h3>
+                            <p>Boost your cardiovascular health with running, cycling, and high-intensity interval training. Great for burning calories and improving endurance.</p>
+                        </div>
+                    </div>
+                    <div class="workout-card">
+                        <div class="workout-image">💪</div>
+                        <div class="workout-content">
+                            <h3>Strength Training</h3>
+                            <p>Build muscle and increase strength with weight lifting, resistance bands, and bodyweight exercises. Perfect for toning and muscle development.</p>
+                        </div>
+                    </div>
+                    <div class="workout-card">
+                        <div class="workout-image">🧘‍♀️</div>
+                        <div class="workout-content">
+                            <h3>Flexibility & Yoga</h3>
+                            <p>Improve flexibility, balance, and mental well-being with yoga poses and stretching routines. Ideal for recovery and stress relief.</p>
+                        </div>
+                    </div>
+                    <div class="workout-card">
+                        <div class="workout-image">🏊‍♂️</div>
+                        <div class="workout-content">
+                            <h3>Swimming</h3>
+                            <p>Full-body, low-impact exercise that's easy on joints. Excellent for cardiovascular fitness and muscle toning.</p>
+                        </div>
+                    </div>
+                    <div class="workout-card">
+                        <div class="workout-image">🥊</div>
+                        <div class="workout-content">
+                            <h3>Boxing & Martial Arts</h3>
+                            <p>High-intensity workouts that improve coordination, strength, and cardiovascular fitness while learning self-defense skills.</p>
+                        </div>
+                    </div>
+                    <div class="workout-card">
+                        <div class="workout-image">🚴‍♀️</div>
+                        <div class="workout-content">
+                            <h3>Cycling</h3>
+                            <p>Low-impact cardio that strengthens legs and improves endurance. Great for outdoor adventures or indoor spin classes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BMI Check Page -->
+        <div id="bmi" class="page">
+            <div class="container">
+                <h2>BMI Calculator</h2>
+                <p>Calculate your Body Mass Index and get personalized health recommendations.</p>
+                
+                <div class="form-container">
+                    <form id="bmiForm">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" required min="1" max="120">
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" required min="50" max="250">
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" required min="20" max="300" step="0.1">
+                        </div>
+                        <button type="submit">Calculate BMI</button>
+                    </form>
+
+                    <div id="bmiResult" class="bmi-result">
+                        <div class="bmi-value" id="bmiValue"></div>
+                        <div id="bmiCategory"></div>
+                        <div id="dietSuggestions"></div>
+                        <div id="exerciseRecommendations"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weekly Tracking Page -->
+
+        <!-- Contact Us Page -->
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <form id="contactForm" action="/contact" method="POST">
+                    <input type="text" name="contactName" placeholder="Name" required>
+                    <input type="email" name="contactEmail" placeholder="Email" required>
+                    <textarea name="message" placeholder="Message" required></textarea>
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Login/Sign Up Page -->
+
+ <div id="login" class="page active">
+            <div class="container">
+                <div class="auth-container">
+                    <h2>Login / Sign Up</h2>
+                    <div class="auth-toggle">
+                        <button type="button" onclick="toggleAuth('login')">Login</button>
+                        <button type="button" onclick="toggleAuth('signup')">Sign Up</button>
+                    </div>
+
+                    <form id="loginForm">
+                        <input type="email" id="email" placeholder="Email" required>
+                        <input type="password" id="password" placeholder="Password" required>
+                        <div id="signupFields" style="display:none;">
+                            <input type="password" id="confirmPassword" placeholder="Confirm Password">
+                            <input type="text" id="fullName" placeholder="Full Name">
+                        </div>
+                        <button type="submit" id="authButton">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Navigation functionality
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Close mobile menu if open
+            document.getElementById('navLinks').classList.remove('active');
+        }
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // BMI Calculator
+        document.getElementById('bmiForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const age = parseInt(document.getElementById('age').value);
+            const height = parseInt(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            
+            const bmi = (weight / ((height / 100) ** 2)).toFixed(1);
+            
+            let category, className, dietSuggestions, exercises;
+            
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                className = 'bmi-underweight';
+                dietSuggestions = 'Increase calorie intake with protein-rich foods, healthy fats, and complex carbohydrates. Consider nuts, avocados, lean meats, and whole grains.';
+                exercises = '🏋️ Light strength training, 🏃‍♂️ Moderate cardio, 🧘‍♀️ Yoga for flexibility';
+            } else if (bmi >= 18.5 && bmi < 25) {
+                category = 'Normal Weight';
+                className = 'bmi-normal';
+                dietSuggestions = 'Maintain a balanced diet with fruits, vegetables, lean proteins, and whole grains. Stay hydrated and eat regular meals.';
+                exercises = '🏃‍♂️ Regular cardio, 💪 Strength training, 🚴‍♀️ Various activities for fitness maintenance';
+            } else if (bmi >= 25 && bmi < 30) {
+                category = 'Overweight';
+                className = 'bmi-overweight';
+                dietSuggestions = 'Focus on portion control, increase vegetables and fruits, reduce processed foods, and choose lean proteins.';
+                exercises = '🏃‍♂️ Cardio workouts, 🏊‍♂️ Swimming, 🚶‍♀️ Walking, 💪 Strength training';
+            } else {
+                category = 'Obese';
+                className = 'bmi-obese';
+                dietSuggestions = 'Consult with a healthcare provider. Focus on whole foods, reduce calories gradually, and increase physical activity slowly.';
+                exercises = '🚶‍♀️ Walking, 🏊‍♂️ Swimming, 🧘‍♀️ Low-impact exercises, 💪 Light strength training';
+            }
+            
+            const resultDiv = document.getElementById('bmiResult');
+            resultDiv.className = `bmi-result show ${className}`;
+            
+            document.getElementById('bmiValue').textContent = `Your BMI: ${bmi}`;
+            document.getElementById('bmiCategory').innerHTML = `<h3>Category: ${category}</h3>`;
+            document.getElementById('dietSuggestions').innerHTML = `<h4>Diet Suggestions:</h4><p>${dietSuggestions}</p>`;
+            document.getElementById('exerciseRecommendations').innerHTML = `<h4>Recommended Exercises:</h4><p>${exercises}</p>`;
+        });
+
+        // Weekly tracking functionality
+        let currentWeekIndex = 0;
+        const weeks = [
+            'Week of Jan 8-14, 2025',
+            'Week of Jan 15-21, 2025',
+            'Week of Jan 22-28, 2025',
+            'Week of Feb 1-7, 2025'
+        ];
+
+        function changeWeek(direction) {
+            if (direction === 'prev' && currentWeekIndex > 0) {
+                currentWeekIndex--;
+            } else if (direction === 'next' && currentWeekIndex < weeks.length - 1) {
+                currentWeekIndex++;
+            }
+            document.getElementById('currentWeek').textContent = weeks[currentWeekIndex];
+        }
+
+        // Auth functionality
+       let isLogin = true;
+        let loggedIn = false; // 🚨 Track login status
+
+        function showPage(pageId) {
+            if (!loggedIn && pageId !== 'login') {
+                alert("⚠️ Please login first!");
+                pageId = 'login';
+            }
+
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('navLinks').classList.remove('active');
+        }
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        function toggleAuth(type) {
+            isLogin = (type === 'login');
+            document.getElementById('signupFields').style.display = isLogin ? 'none' : 'block';
+            document.getElementById('authButton').textContent = isLogin ? 'Login' : 'Sign Up';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (isLogin) {
+                // 🚨 Basic fake check (replace with backend later)
+                const email = document.getElementById('email').value;
+                const pass = document.getElementById('password').value;
+                if (email && pass) {
+                    loggedIn = true;
+                    alert("✅ Logged in successfully!");
+                    showPage('home');
+                }
+            } else {
+                loggedIn = true;
+                alert("✅ Account created & logged in!");
+                showPage('home');
+            }
+        });
+
+        function logout() {
+            loggedIn = false;
+            alert("👋 Logged out successfully!");
+            showPage('login');
+        }
+
+        // By default show login page
+        document.addEventListener("DOMContentLoaded", () => {
+            showPage("login");
+        });
+    </script>
+</body>
+</html>
+
+
+
